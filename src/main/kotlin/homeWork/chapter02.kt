@@ -1,3 +1,5 @@
+package homeWork
+
 const val pikachu = "thunder"
 
 const val HERO_NAME = "Madrigal"
@@ -18,4 +20,7 @@ fun main() {
 
     playerLevel++
     println(playerLevel)
+
+    var hasSteed: String? = null
+    println(HERO_NAME.reversed())
 }
