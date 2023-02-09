@@ -104,22 +104,17 @@ fun main() {
 
 private fun readBountyBoard() {
     println("The hero approaches the bounty board. It reads:")
-    println(obtainQuest(playerLevel,
-                        false,
-                        true,
-                        "paladin"))
+    println(obtainQuest(playerLevel))
 }
 
 private fun obtainQuest(
     playerLevel: Int,
-    hasAngeredBarbarians: Boolean,
-    hasBefriendedBarbarians: Boolean,
-    playerClass: String
-): String {
+    hasBefriendedBarbarians: Boolean = true,
+    playerClass: String = "paladin",
+    hasAngeredBarbarians: Boolean = false): String =
 
-    println(HERO_NAME)
     //    перепишем блок if \ else  на when
-    val quest: String = when (playerLevel) {
+    when (playerLevel) {
         1 -> "Meet Mr. Bubbles in the land of soft things."
         in 2..5 -> {
 //            проверим возможность дипломатического решения
@@ -133,5 +128,8 @@ private fun obtainQuest(
         8 -> "Defeat Nogartse, bringer of death and eater of worlds"
         else -> "There are no quests right now"
     }
-    return quest
+
+private fun someFun(): String {
+    TODO("something from TODO functions")
+    println("some text from someFun")
 }
