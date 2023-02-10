@@ -2,7 +2,7 @@ import kotlin.math.exp
 
 const val pikachu = "thunderbolt"
 const val HERO_NAME = "Madrigal"
-var playerLevel = 5
+var playerLevel = 0
 
 
 
@@ -10,9 +10,16 @@ fun main() {
     println("Hello again, Kotlin")
     println(15.coerceAtMost(44))
 
-    println("The hero announces her presence to the world.")
-    println(HERO_NAME)
-    println(playerLevel)
+    println("$HERO_NAME announces her presence to the world.")
+    println("What level is $HERO_NAME?")
+    val playerLevelInput = readLine()!!
+    playerLevel = if (playerLevelInput.matches("""\d+""".toRegex())) {
+        playerLevelInput.toInt()
+    } else {
+        1
+    }
+    println("$HERO_NAME's level is $playerLevel")
+
 
 /*    val hasAngeredBarbarians = false
     val hasBefriendedBarbarians = true
@@ -95,7 +102,7 @@ fun main() {
     println("Player title: $playerTitle")
 
     println("Time passes...")
-    println("The hero returns from her quest.")
+    println("$HERO_NAME returns from her quest.")
 
     playerLevel++
     println(playerLevel)
@@ -103,9 +110,16 @@ fun main() {
 }
 
 private fun readBountyBoard() {
-    println("The hero approaches the bounty board. It reads:")
-    println(obtainQuest(playerLevel))
+    println(
+        """
+        |$HERO_NAME approaches the bounty board. It reads:
+        |   "${obtainQuest(playerLevel).replace("Nogartse", "xxxxxxxx")}
+        """.trimMargin()
+    )
 }
+
+// ћожно еще проверить регистр на замену
+// "[Nn]ogartse".toRegex()
 
 private fun obtainQuest(
     playerLevel: Int,
