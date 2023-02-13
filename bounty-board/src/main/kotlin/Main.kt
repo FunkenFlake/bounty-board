@@ -1,3 +1,4 @@
+import java.util.Objects.equals
 import kotlin.math.exp
 
 const val pikachu = "thunderbolt"
@@ -19,6 +20,8 @@ fun main() {
         1
     }
     println("$HERO_NAME's level is $playerLevel")
+
+//    println(equals(pikachu, HERO_NAME))
 
 
 /*    val hasAngeredBarbarians = false
@@ -110,22 +113,30 @@ fun main() {
 }
 
 private fun readBountyBoard() {
-    println(
-        """
-        |$HERO_NAME approaches the bounty board. It reads:
-        |   "${obtainQuest(playerLevel).replace("Nogartse", "xxxxxxxx")}
-        """.trimMargin()
-    )
+    val quest: String? = obtainQuest(playerLevel)
+
+    val message: String? = quest?.replace("Nogartse", "xxxxxxxx")
+        ?.let{ censoredQuest ->
+            """
+            |$HERO_NAME approaches the bounty board. It reads:
+            |   "$quest"
+            |   "$censoredQuest"
+            """.trimMargin()
+        }
+    println(message)
 }
 
 // ћожно еще проверить регистр на замену
 // "[Nn]ogartse".toRegex()
 
+
+// тк функци€ содержит одно выражение мы опускаем return и {}, вместо них ставим =
+// так же можно не указывать тип возвращаемого значени€ (просто дл€ читаемости лучше его указать)
 private fun obtainQuest(
     playerLevel: Int,
     hasBefriendedBarbarians: Boolean = true,
     playerClass: String = "paladin",
-    hasAngeredBarbarians: Boolean = false): String =
+    hasAngeredBarbarians: Boolean = false): String? =
 
     //    перепишем блок if \ else  на when
     when (playerLevel) {
@@ -140,7 +151,7 @@ private fun obtainQuest(
         6 -> "Locate the enchanted sword"
         7 -> "Recover the long-lost artifact of creation."
         8 -> "Defeat Nogartse, bringer of death and eater of worlds"
-        else -> "There are no quests right now"
+        else -> null
     }
 
 private fun someFun(): String {
