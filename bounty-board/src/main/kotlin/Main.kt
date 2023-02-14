@@ -108,16 +108,19 @@ fun main() {
 }
 
 private fun readBountyBoard() {
-    val quest: String? = obtainQuest(playerLevel)
+    val message: String = try {
+        val quest: String? = obtainQuest(playerLevel)
 
-    val message: String = quest?.replace("Nogartse", "xxxxxxxx")
-        ?.let{ censoredQuest ->
+        quest?.replace("Nogartse", "xxxxxxxx")?.let{ censoredQuest ->
             """
             |$HERO_NAME approaches the bounty board. It reads:
             |   "$quest"
             |   "$censoredQuest"
             """.trimMargin()
         } ?: "$HERO_NAME approaches the bounty board, but it is blank."
+    } catch (e: Exception) {
+        "$HERO_NAME can't read what's on the bounty board. $e"
+    }
     println(message)
 }
 
@@ -131,10 +134,14 @@ private fun obtainQuest(
     playerLevel: Int,
     hasBefriendedBarbarians: Boolean = true,
     playerClass: String = "paladin",
-    hasAngeredBarbarians: Boolean = false): String? =
+    hasAngeredBarbarians: Boolean = false): String? {
 
-    //    перепишем блок if \ else  на when
-    when (playerLevel) {
+    require(playerLevel > 0) {
+        "The player's level must be at least 1."
+    }
+
+//    перепишем блок if \ else  на when
+    return when (playerLevel) {
         1 -> "Meet Mr. Bubbles in the land of soft things."
         in 2..5 -> {
 //            проверим возможность дипломатического решения
@@ -148,6 +155,7 @@ private fun obtainQuest(
         8 -> "Defeat Nogartse, bringer of death and eater of worlds"
         else -> null
     }
+}
 
 private fun someFun(): String {
     TODO("something from TODO functions")
