@@ -1,3 +1,7 @@
+// Раздел для любознательный 8 глава: захват лямбда-выражений
+
+package forTheCurious.chapter08
+
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -6,7 +10,7 @@ var narrationModifier: (String) -> String = { it }
 inline fun narrate(
     message: String,
     modifier: (String) -> String = { narrationModifier(it) },
-    ) {
+) {
     println(modifier(message))
 }
 

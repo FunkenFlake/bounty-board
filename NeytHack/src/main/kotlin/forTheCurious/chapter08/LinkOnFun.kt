@@ -1,12 +1,17 @@
+// Раздел для любознательный 8 глава: ссылки на функции
+
+
+
+package forTheCurious.chapter08
+
+import narrate
+import changeNarratorMood
+
 fun main() {
 
-    // тут { message... это второй аргумент, параметр принимает функцию, использовав
-    // сокращенный синтаксис, мы опускаем круглые скобки для 2ого аргумента, оставим только для первого
-    // поэтому мы убираем запятую и таким образом получаем два переданных аргумента
-    narrate("A hero enters the town of Kronstadt. What is their name?") { message ->
-            // Выводит сообщение желтым цветом
-            "\u001b[33;1m$message\u001b[0m"
-        }
+    // ::makeYellow - передаем в виде аргумента ссылку на функцию
+    // ссылка на ф-ию преобразует обычную ф-ию (fun), в значение с типом функции.
+    narrate("A hero enters the town of Kronstadt. What is their name?", ::makeYellow)
 
     val heroName = readLine()
     require(heroName != null && heroName.isNotEmpty()) {
@@ -16,6 +21,8 @@ fun main() {
     changeNarratorMood()
     narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
 }
+
+private fun makeYellow(message: String) = "\u001B[33;1m$message\u001B[0m"
 
 private fun createTitle(name: String): String {
     return when {
