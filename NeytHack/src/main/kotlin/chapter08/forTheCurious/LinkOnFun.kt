@@ -2,7 +2,7 @@
 
 
 
-package forTheCurious.chapter08
+package chapter08
 
 import narrate
 import changeNarratorMood

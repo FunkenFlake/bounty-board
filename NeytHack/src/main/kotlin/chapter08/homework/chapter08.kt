@@ -1,4 +1,4 @@
-package homework.chapter08
+package chapter08.homework
 
 fun main() {
 

@@ -1,6 +1,6 @@
 // Раздел для любознательный 8 глава: захват лямбда-выражений
 
-package forTheCurious.chapter08
+package chapter08
 
 import kotlin.random.Random
 import kotlin.random.nextInt
