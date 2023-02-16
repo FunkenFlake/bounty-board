@@ -1,20 +1,31 @@
+
+var heroName: String = ""
+
 fun main() {
 
+    heroName = promptHeroName()
+//    changeNarratorMood()
+    narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
+
+    visitTavern()
+}
+
+private fun promptHeroName(): String {
     // тут { message... это второй аргумент, параметр принимает функцию, использовав
     // сокращенный синтаксис, мы опускаем круглые скобки для 2ого аргумента, оставим только для первого
     // поэтому мы убираем запятую и таким образом получаем два переданных аргумента
     narrate("A hero enters the town of Kronstadt. What is their name?") { message ->
-            // Выводит сообщение желтым цветом
-            "\u001b[33;1m$message\u001b[0m"
-        }
-
-    val heroName = readLine()
-    require(heroName != null && heroName.isNotEmpty()) {
-        "The hero must have a name."
+        // Выводит сообщение желтым цветом
+        "\u001b[33;1m$message\u001b[0m"
     }
 
-    changeNarratorMood()
-    narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
+/*    val input = readLine()
+    require(input != null && input.isNotEmpty()) {
+        "The hero must have a name."
+    }
+    return input*/
+    println("Madrigal")
+    return "Madrigal"
 }
 
 private fun createTitle(name: String): String {
