@@ -22,7 +22,7 @@ fun visitTavern() {
 
     val patrons: MutableSet<String> = mutableSetOf()
 
-    repeat(10) {
+    while(patrons.size < 10) {
         patrons += "${firstName.random()} ${lastName.random()}"
     }
 //    println(patrons[0]) // можно получать индекс через функцию .get(0)
