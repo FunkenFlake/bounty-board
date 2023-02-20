@@ -21,10 +21,17 @@ fun visitTavern() {
     println(menuItems.joinToString())
 
     val patrons: MutableSet<String> = mutableSetOf()
+    val patronGold = mapOf(
+        TAVERN_MASTER to 86.00,
+        heroName to 4.50,
+    )
 
     while(patrons.size < 10) {
         patrons += "${firstName.random()} ${lastName.random()}"
     }
+
+    println(patronGold)
+
 //    println(patrons[0]) // можно получать индекс через функцию .get(0)
 //    println(patrons.getOrElse(5) { "Unknown Patron" })
 //    println(patrons.getOrNull(5) ?: "Unknown Patron")
