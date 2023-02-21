@@ -10,8 +10,8 @@ private val menuData = File("data/tavern-menu-data.txt")
     .readText()
     .split("\n")
 
-private val menuItems = List(menuData.size) { index ->
-    val (_, name, _) = menuData[index].split(",")
+private val menuItems: List<String> = menuData.map { menuEntry: String ->
+    val (_, name, _) = menuEntry.split(",")
     name
 }
 
