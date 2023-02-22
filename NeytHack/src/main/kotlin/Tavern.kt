@@ -1,4 +1,8 @@
 import java.io.File
+import kotlin.random.Random
+import kotlin.random.nextInt
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
 
 private const val TAVERN_MASTER = "Taernyl"
 private const val TAVERN_NAME = "$TAVERN_MASTER's Folly"
@@ -26,17 +30,20 @@ fun visitTavern() {
     narrate("There are several items for sale:")
     println(menuItems.joinToString())
 
-    val patrons: MutableSet<String> = mutableSetOf()
+    val patrons: MutableSet<String> = firstNames.shuffled()
+        .zip(lastNames.shuffled()) { firstName, lastName ->
+            "$firstName $lastName"}.toMutableSet()
+
     val patronGold = mutableMapOf(
         TAVERN_MASTER to 86.00,
         heroName to 4.50,
+        *patrons.map { it to 6.00 }.toTypedArray()
     )
 
-    while(patrons.size < 5) {
-        val patronName = "${firstNames.random()} ${lastNames.random()}"
-        patrons += patronName
+    // заменяем на строку выше *patrons.map {......
+/*    patrons.forEach { patronName ->
         patronGold += patronName to 6.0
-    }
+    }*/
 
 //    println(patrons[0]) // можно получать индекс через функцию .get(0)
 //    println(patrons.getOrElse(5) { "Unknown Patron" })
@@ -89,6 +96,9 @@ fun visitTavern() {
     narrate("\n$heroName sees several patrons in the tavern:")
     narrate(patrons.joinToString())
 
+    val itemOfDay = patrons.flatMap { getFavoriteMenuItems(it) }.random()
+    narrate("The item of the day is the $itemOfDay")
+
     println(patronGold)
 
     repeat(3) {
@@ -97,6 +107,25 @@ fun visitTavern() {
     println("\n$patronGold")
     displayPatronBalance(patronGold)
 
+    val departingPatrons: List<String> = patrons
+        .filter { patron -> patronGold.getOrDefault(patron, 0.0) < 4.0 }
+    patrons -= departingPatrons
+    patronGold -= departingPatrons
+    departingPatrons.forEach { patron ->
+        narrate("$heroName sees $patron departing the tavern")
+    }
+
+    narrate("There are still some patrons in the tavern")
+    narrate(patrons.joinToString())
+}
+
+private fun getFavoriteMenuItems(patron: String): List<String> {
+    return when (patron) {
+        "Alex Ironfoot" -> menuItems.filter { menuItem ->
+            menuItemTypes[menuItem]?.contains("dessert") == true
+        }
+        else -> menuItems.shuffled().take(Random.nextInt(1..2))
+    }
 }
 
 private fun placeOrder(
