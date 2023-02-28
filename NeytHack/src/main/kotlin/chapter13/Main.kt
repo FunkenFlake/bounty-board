@@ -1,6 +1,6 @@
-package chapter11.homework
+// начиная с главы 13 классы, буду делать для каждой главы директорию
 
-
+package chapter13
 var heroName: String = ""
 
 fun main() {
@@ -21,11 +21,6 @@ private fun promptHeroName(): String {
         "\u001b[33;1m$message\u001b[0m"
     }
 
-/*    val input = readLine()
-    require(input != null && input.isNotEmpty()) {
-        "The hero must have a name."
-    }
-    return input*/
     println("Madrigal")
     return "Madrigal"
 }

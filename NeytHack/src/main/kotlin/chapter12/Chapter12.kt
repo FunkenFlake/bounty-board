@@ -1,9 +1,11 @@
+package chapter12
+
 import java.io.File
 
 // Функции области видимости, их описание
-// разкоментить main, использовать в REPL
+// разкоментить chapter12.main, использовать в REPL
 
-/*fun main() {
+/*fun chapter12.main() {
 
     val number: Int? = 10
 

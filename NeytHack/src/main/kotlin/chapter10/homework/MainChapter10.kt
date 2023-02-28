@@ -6,7 +6,7 @@ var heroName: String = ""
 fun main() {
 
     heroName = promptHeroName()
-//    changeNarratorMood()
+//    chapter12.changeNarratorMood()
     narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
 
     visitTavern()

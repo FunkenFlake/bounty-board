@@ -1,9 +1,9 @@
+package chapter12
+
 import arrow.core.Either
 import java.io.File
 import kotlin.random.Random
 import kotlin.random.nextInt
-import kotlin.system.measureNanoTime
-import kotlin.system.measureTimeMillis
 
 private const val TAVERN_MASTER = "Taernyl"
 private const val TAVERN_NAME = "$TAVERN_MASTER's Folly"
@@ -55,17 +55,17 @@ fun visitTavern() {
 
 
   /*  val eliMessage = if (patrons.contains("Eli")) {
-        "$TAVERN_MASTER says: Eli's in the back playing cards"
+        "$chapter12.TAVERN_MASTER says: Eli's in the back playing cards"
     } else {
-        "$TAVERN_MASTER seys: Eli isn't here"
+        "$chapter12.TAVERN_MASTER seys: Eli isn't here"
     }
 
     println(eliMessage)
 
     val othersMessage = if (patrons.containsAll(listOf("Sophie", "Mordoc"))) {
-        "$TAVERN_MASTER says: Sophie and Mordoc are seated by the stew kettle"
+        "$chapter12.TAVERN_MASTER says: Sophie and Mordoc are seated by the stew kettle"
     } else {
-        "$TAVERN_MASTER says: Sophie and Mordoc aren't with each other right now"
+        "$chapter12.TAVERN_MASTER says: Sophie and Mordoc aren't with each other right now"
     }
 
     println(othersMessage)*/
@@ -84,10 +84,10 @@ fun visitTavern() {
     // для работы с индексами используем forEachIndexed
 /*    patrons.forEachIndexed { index, patron ->
         println("Good evening, $patron - you're #${index + 1} in line")
-        placeOrder(patron, menuItems.random())
+        chapter12.placeOrder(patron, chapter12.menuItems.random())
     }*/
 
-/*    menuData.forEachIndexed { index, data ->
+/*    chapter12.menuData.forEachIndexed { index, data ->
         println("$index : $data")
     }*/
 
@@ -115,7 +115,7 @@ fun visitTavern() {
     patrons -= departingPatrons
     patronGold -= departingPatrons
     departingPatrons.forEach { patron ->
-        narrate("$heroName sees $patron departing the tavern")
+        chapter12.narrate("$chapter12.getHeroName sees $patron departing the tavern")
     }*/
 
     // перепишем блок выше, используем also

@@ -1,15 +1,15 @@
 package chapter09.homework
 
-import narrate
+import chapter12.narrate
 
 
 var heroName: String = "Madrigal"
 
 fun main() {
 
-/*    heroName = promptHeroName()
-//    changeNarratorMood()
-    narrate("$heroName, ${createTitle(heroName)}, heads to the town square")*/
+/*    chapter12.getHeroName = promptHeroName()
+//    chapter12.changeNarratorMood()
+    chapter12.narrate("$chapter12.getHeroName, ${createTitle(chapter12.getHeroName)}, heads to the town square")*/
 
     visitTavern()
 }

@@ -1,6 +1,6 @@
 package chapter09.homework
 
-import narrate
+import chapter12.narrate
 import java.io.File
 
 private const val TAVERN_MASTER = "Taernyl"

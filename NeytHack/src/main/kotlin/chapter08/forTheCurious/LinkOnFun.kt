@@ -4,8 +4,8 @@
 
 package chapter08
 
-import narrate
-import changeNarratorMood
+import chapter12.narrate
+import chapter12.changeNarratorMood
 
 fun main() {
 
