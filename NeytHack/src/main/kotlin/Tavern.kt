@@ -110,13 +110,22 @@ fun visitTavern() {
     println("\n$patronGold")
     displayPatronBalance(patronGold)
 
-    val departingPatrons: List<String> = patrons
+/*    val departingPatrons: List<String> = patrons
         .filter { patron -> patronGold.getOrDefault(patron, 0.0) < 4.0 }
     patrons -= departingPatrons
     patronGold -= departingPatrons
     departingPatrons.forEach { patron ->
         narrate("$heroName sees $patron departing the tavern")
-    }
+    }*/
+
+    // перепишем блок выше, используем also
+    patrons.filter { patron -> patronGold.getOrDefault(patron, 0.0) < 4.0 }
+        .also { departingPatrons ->
+            patrons -= departingPatrons
+            patronGold -= departingPatrons
+        }.forEach { patron ->
+            narrate("$heroName sees $patron departing the tavern")
+        }
 
     narrate("There are still some patrons in the tavern")
     narrate(patrons.joinToString())

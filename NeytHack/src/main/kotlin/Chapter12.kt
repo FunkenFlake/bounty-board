@@ -1,8 +1,9 @@
 import java.io.File
 
 // Функции области видимости, их описание
+// разкоментить main, использовать в REPL
 
-fun main() {
+/*fun main() {
 
     val number: Int? = 10
 
@@ -77,5 +78,5 @@ fun main() {
     // читает файл, если он не является скрытым, в ином случае - возвращает null
     val fileContents = File("myfile.txt").takeUnless { it.isHidden }?.readText()
 
-}
+}*/
 
