@@ -4,12 +4,13 @@ package chapter13
 
 // определение класса создает соответствующий тип, поэтому
 // переменная player имеет тип Player
-val player = Player()
+val player = Player("Jason", "Jacksonville")
 
 fun main() {
-    narrate("${player.name} is ${player.title}")
-    player.changeName("Aurelia")
-    narrate("${player.name}, ${player.title}, heads to the town square")
+    // changeNarratorMood()
+    val mortality = if (player.isImmortal) "an immortal" else "a mortal"
+    narrate("${player.name} of ${player.hometown}, ${player.title}, heads to the town square")
+    narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
 
     visitTavern()
     player.castFireball()
