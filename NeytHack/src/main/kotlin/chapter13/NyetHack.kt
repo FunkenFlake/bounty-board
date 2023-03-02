@@ -1,15 +1,18 @@
 // начиная с главы 13 классы, буду делать для каждой главы директорию
 
 package chapter13
-var heroName: String = ""
+
+// определение класса создает соответствующий тип, поэтому
+// переменная player имеет тип Player
+val player = Player()
 
 fun main() {
-
-    heroName = promptHeroName()
-//    chapter12.changeNarratorMood()
-    narrate("$heroName, ${createTitle(heroName)}, heads to the town square")
+    narrate("${player.name} is ${player.title}")
+    player.changeName("Aurelia")
+    narrate("${player.name}, ${player.title}, heads to the town square")
 
     visitTavern()
+    player.castFireball()
 }
 
 private fun promptHeroName(): String {
@@ -23,13 +26,4 @@ private fun promptHeroName(): String {
 
     println("Madrigal")
     return "Madrigal"
-}
-
-private fun createTitle(name: String): String {
-    return when {
-        name.all { it.isDigit() } -> "The Identifiable"
-        name.none { it.isLetter() } -> "The Witness Protection Member"
-        name.count {it.lowercase() in "aeiouyj" } > 4 -> "The Master of Vowel"
-        else -> "The Renowned Hero"
-    }
 }
