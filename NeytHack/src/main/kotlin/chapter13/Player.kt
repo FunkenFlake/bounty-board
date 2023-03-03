@@ -1,16 +1,18 @@
 package chapter13
 
-class Player(
+class Player( // вот в ( я конструктор ) и есть конструктор
     initialName: String,
-    val hometown: String,
+    val hometown: String = "Neversummer",
     var healthPoints: Int,
-    val isImmortal: Boolean,
+    var isImmortal: Boolean,
 ) {
     var name = initialName
         get() = field.replaceFirstChar { it.uppercase() }
         private set(value) {
             field = value.trim() // убирает пробелы
         }
+
+    val someSome = 99 // это свойство, оно определено на уровне класса. см. другую someSome
 
     val title: String
         get() = when {
@@ -20,16 +22,34 @@ class Player(
             else -> "The Renowned Hero"
         }
 
-    constructor(name: String, hometown: String) : this(
+    init { // тут можно также присвоить значения свойствам, вычислить состояния итп.
+        require(healthPoints > 0) {"healthPoints must be greater than zero"}
+        require(name.isNotBlank()) {"Player must have a name"}
+    }
+
+    constructor(name: String) : this(
         initialName = name,
-        hometown = hometown,
         healthPoints = 100,
         isImmortal = false,
-    ) { // по мимо самого доп. конструктора можно и логики добавить, почему бы и нет?))
+    ) { // помимо самого доп. конструктора можно и логики добавить, почему бы и нет?))
         // по факту получается какое-то ответвление от основной ветки класса
-        if (name.equals("Jason", ignoreCase = true)) { //equals, тоже что и ==, ignoreCase - браво!
+        if (name.equals("Jason", ignoreCase = true)) { //equals, аналог ==, ignoreCase - браво!
             healthPoints = 500
         }
+    }
+
+    constructor(name: String, healthPoints: Int) : this(
+        // тут мы подготавливаем доп. конструктор, аналогично мы поступаем при создании экземпляра
+        // player = Player( ну и тут так же подготавливаем конструктор)
+        // this - вызовет основной конструктор.
+        initialName = name, // передаем через именнованный параметр
+        "Jacksonville",
+        healthPoints, // а можно и без него, только легко запутаться
+        false,
+    ) {
+        if (healthPoints == 1) isImmortal = true
+        val someSome = 100 // а вот это уже переменная
+
     }
 
     fun castFireball(numFireballs: Int = 2) {
@@ -39,5 +59,9 @@ class Player(
     fun changeName(newName: String) {
         narrate("$name legally changes their name to $newName")
         name = newName
+    }
+
+    fun weaponDamage(attackPower: Int, skill: Int, bonusDamage: Int): Int {
+        return attackPower * skill * (1 + bonusDamage)
     }
 }
