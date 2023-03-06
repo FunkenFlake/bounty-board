@@ -1,4 +1,4 @@
-package chapter13
+package chapter15
 
 class Player( // вот в ( я конструктор ) и есть конструктор
     initialName: String,

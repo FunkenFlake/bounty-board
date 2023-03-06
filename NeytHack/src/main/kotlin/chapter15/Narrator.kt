@@ -1,4 +1,4 @@
-package chapter13
+package chapter15
 
 import kotlin.random.Random
 import kotlin.random.nextInt
