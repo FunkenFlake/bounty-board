@@ -22,6 +22,18 @@ class Player( // вот в ( я конструктор ) и есть конструктор
             else -> "The Renowned Hero"
         }
 
+    val prophecy by lazy {
+        narrate("$name embarks on an arduous quest to locate a fortune teller")
+        Thread.sleep(3000)
+        narrate("The fortune teller bestows a prophecy upon $name")
+        "An intrepid hero from $hometown shall some day "+ listOf(
+            "form an unlikely bond between two warring factions",
+            "take possession of an otherworldly blade",
+            "bring the gift of creation back to the world",
+            "best the world-eater"
+        ).random()
+    }
+
     init { // тут можно также присвоить значения свойствам, вычислить состояния итп.
         require(healthPoints > 0) {"healthPoints must be greater than zero"}
         require(name.isNotBlank()) {"Player must have a name"}
@@ -59,6 +71,11 @@ class Player( // вот в ( я конструктор ) и есть конструктор
     fun changeName(newName: String) {
         narrate("$name legally changes their name to $newName")
         name = newName
+    }
+
+    fun prophesize() {
+        narrate("$name thinks about their future")
+        narrate("A fortune teller told Madrigal, \"$prophecy\"")
     }
 
     fun weaponDamage(attackPower: Int, skill: Int, bonusDamage: Int): Int {
