@@ -11,21 +11,15 @@ fun main() {
     val playerName = promptHeroName()
     player = Player(playerName)
     // changeNarratorMood()
-    player.prophesize()
+//    player.prophesize()
+//    player.castFireball()
+//    player.prophesize()
 
-    var currentRoom: Room = Tavern() // имеет тип Room, так можно тк TownSquare подкласс Room
-    val mortality = if (player.isImmortal) "an immortal" else "a mortal"
-    narrate("${player.name} of ${player.hometown}, ${player.title}," +
-            " is in ${currentRoom.description()}")
-    narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
-    currentRoom.enterRoom()
+//    repeat(15) {
+//        damageSword()
+//    }
 
-    player.castFireball()
-    player.prophesize()
-
-    repeat(11) {
-        damageSword()
-    }
+    Game.play()
 }
 
 private fun promptHeroName(): String {
@@ -43,8 +37,33 @@ private fun promptHeroName(): String {
 // for fun
 private fun damageSword() {
     Thread.sleep((200..1200).random().toLong())
-    narrate("Damage Sword: ${player.weaponDamage(
+/*    narrate("Damage Sword: ${player.weaponDamage(
         attackPower = (35..45).random(),
         skill = (12..14).random(),
-        bonusDamage = (3..9).random())}")
+        bonusDamage = (3..9).random())}")*/
+    print("|")
+}
+
+object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
+                // поэтому называют синглтон, так же он сам создает конструктор
+
+    private var currentRoom: Room = TownSquare() // имеет тип Room, так можно тк TownSquare подкласс Room
+
+    init {      // можно объ€вить инициализацию дл€ выполнени€, какого нить кода при запуске
+        narrate("Welcome, adventurer")
+        val mortality = if (player.isImmortal) "an immortal" else "a mortal"
+        narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
+    }
+
+    fun play() {// чтобы запустить объект нужно вызвать, что-то из него, вызовем эту ф-ию
+        while (true) {
+            // Game
+            narrate("${player.name} of ${player.hometown}, ${player.title}," +
+                    " is in ${currentRoom.description()}")
+            currentRoom.enterRoom()
+
+            print("> Enter your command: ")
+            println("Last command: ${readLine()}")
+        }
+    }
 }
