@@ -24,7 +24,7 @@ class Player( // вот в ( я конструктор ) и есть конструктор
 
     val prophecy by lazy {
         narrate("$name embarks on an arduous quest to locate a fortune teller")
-        Thread.sleep(3000)
+//        Thread.sleep(3000)
         narrate("The fortune teller bestows a prophecy upon $name")
         "An intrepid hero from $hometown shall some day "+ listOf(
             "form an unlikely bond between two warring factions",
