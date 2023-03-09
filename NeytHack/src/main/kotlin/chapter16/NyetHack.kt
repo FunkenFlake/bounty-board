@@ -2,6 +2,8 @@
 
 package chapter16
 
+import arrow.core.valid
+
 // определение класса создает соответствующий тип, поэтому
 // переменна€ player имеет тип Player
 lateinit var player: Player
@@ -18,6 +20,8 @@ fun main() {
 //    repeat(15) {
 //        damageSword()
 //    }
+
+    println(DirectionRotation.values())
 
     Game.play()
 }
@@ -47,7 +51,14 @@ private fun damageSword() {
 object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
                 // поэтому называют синглтон, так же он сам создает конструктор
 
-    private var currentRoom: Room = TownSquare() // имеет тип Room, так можно тк TownSquare подкласс Room
+    private val worldMap = listOf(
+        listOf(TownSquare(), Tavern(), Room("Back Room")),
+        listOf(Room("A Long Corridor"), Room("A Generic Room")),
+        listOf(Room("The Dangeon"))
+    )
+
+    private var currentRoom: Room = worldMap[0][0] // имеет тип Room, так можно тк TownSquare подкласс Room
+    private var currentPosition = Coordinate(0, 0)
 
     init {      // можно объ€вить инициализацию дл€ выполнени€, какого нить кода при запуске
         narrate("Welcome, adventurer")
@@ -63,7 +74,39 @@ object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
             currentRoom.enterRoom()
 
             print("> Enter your command: ")
-            println("Last command: ${readLine()}")
+            GameInput(readLine()).processCommand()
+        }
+    }
+
+    fun move(direction: Direction) {
+        val newPosition = direction.updateCoordinate(currentPosition)
+        val newRoom = worldMap.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
+
+        if (newRoom != null) {
+            narrate("The hero moves ${direction.name}")
+            currentPosition = newPosition
+            currentRoom = newRoom
+        } else {
+            narrate("You cannot move ${direction.name}")
+        }
+    }
+
+    private class GameInput(arg: String?) {
+        private val input = arg ?: ""
+        val command = input.split(" ")[0]
+        val argument = input.split(" ").getOrElse(1) { "" }
+
+        fun processCommand() = when (command.lowercase()) {
+            "move" -> {
+                val direction = Direction.values()
+                    .firstOrNull { it.name.equals(argument, ignoreCase = true) }
+                if (direction != null) {
+                    move(direction)
+                } else {
+                    narrate("I don't know what direction that is")
+                }
+            }
+            else -> narrate("I'm not sure what you're trying to do")
         }
     }
 }
