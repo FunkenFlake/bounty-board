@@ -34,6 +34,10 @@ class Player( // вот в ( я конструктор ) и есть конструктор
         ).random()
     }
 
+    val inventory = mutableListOf<Loot>()
+
+    var gold = 0
+
     override val diceCount = 3
     override val diceSides = 4
 
