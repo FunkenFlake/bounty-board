@@ -18,7 +18,8 @@ class Player( // вот в ( я конструктор ) и есть конструктор
         get() = when {
             name.all { it.isDigit() } -> "The Identifiable"
             name.none { it.isLetter() } -> "The Witness Protection Member"
-            name.count {it.lowercase() in "aeiouyj" } > 4 -> "The Master of Vowel"
+//            name.count {it.lowercase() in "aeiouyj" } > 4 -> "The Master of Vowels"
+            name.numVowels > 4 -> "The Master of Vowels"
             else -> "The Renowned Hero"
         }
 

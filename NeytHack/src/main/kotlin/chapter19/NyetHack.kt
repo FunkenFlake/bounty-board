@@ -13,7 +13,7 @@ fun main() {
     narrate("Welcome to NyetHack!")
     val playerName = promptHeroName()
     player = Player(playerName)
-    // changeNarratorMood()
+     changeNarratorMood()
 
 /*    val lootBoxOne: LootBox<Fedora> = LootBox(Fedora("a generic-looking fedora", 15))
     val lootBoxTwo: LootBox<Gemstones> = LootBox(Gemstones(150))
@@ -45,8 +45,12 @@ private fun promptHeroName(): String {
         "\u001b[33;1m$message\u001b[0m"
     }
 
-    println("Madrigal")
-    return "Madrigal"
+    val input = readLine()
+    require(input != null && input.isNotEmpty()) {
+        "The hero must have a name."
+    }
+
+    return input
 }
 
 object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
@@ -80,8 +84,10 @@ object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
     }
 
     fun move(direction: Direction) {
-        val newPosition = direction.updateCoordinate(currentPosition)
-        val newRoom = worldMap.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
+        // тут примен€ем инфиксную запись, сама ф-и€ находитс€ в Ext
+        val newPosition = currentPosition move direction //direction.updateCoordinate(currentPosition)
+        // тут примен€ем операторную ф-ию, находитс€ в Ext
+        val newRoom = worldMap[newPosition] //.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
 
         if (newRoom != null) {
             narrate("The hero moves ${direction.name}")
@@ -100,13 +106,21 @@ object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
             return
         }
 
+        var combatRound = 0
+        val previousNarrationModifier = narrationModifier
+        narrationModifier = { it.addEnthusiasm(enthusiasmLevel = combatRound)}
+
         while (player.healthPoints > 0 && currentMonster.healthPoints > 0) {
+            combatRound++
+
             player.attack(currentMonster)
             if (currentMonster.healthPoints > 0) {
                 currentMonster.attack(player)
             }
             Thread.sleep(1000)
         }
+
+        narrationModifier = previousNarrationModifier
 
         if (player.healthPoints <= 0) {
             narrate("You have been defeated! Thanks for playing")
