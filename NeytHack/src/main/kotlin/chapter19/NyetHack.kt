@@ -87,15 +87,12 @@ object Game {   // объект, то же самое, что и класс, только в 1 экземпл€ре
         // тут примен€ем инфиксную запись, сама ф-и€ находитс€ в Ext
         val newPosition = currentPosition move direction //direction.updateCoordinate(currentPosition)
         // тут примен€ем операторную ф-ию, находитс€ в Ext
-        val newRoom = worldMap[newPosition] //.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
+        val newRoom = worldMap[newPosition].orEmptyRoom() //.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
 
-        if (newRoom != null) {
-            narrate("The hero moves ${direction.name}")
-            currentPosition = newPosition
-            currentRoom = newRoom
-        } else {
-            narrate("You cannot move ${direction.name}")
-        }
+        narrate("The hero moves ${direction.name}")
+        currentPosition = newPosition
+        currentRoom = newRoom
+
     }
 
     fun fight() {
