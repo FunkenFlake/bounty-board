@@ -10,7 +10,7 @@ private const val BASE_URL = "http://kotlin-book.bignerdranch.com/2e"
 private const val FLIGHT_ENDPOINT = "$BASE_URL/flight"
 private const val LOYALTY_ENDPOINT = "$BASE_URL/loyalty"
 
-fun main() {
+/*fun main() {
     println("with out coroutine")
     runBlocking {
         println("Started")
@@ -22,7 +22,7 @@ fun main() {
     }
 
     println("end")
-}
+}*/
 
 suspend fun fetchFlight(passengerName: String): FlightStatus = coroutineScope {
     val client = HttpClient(CIO)
