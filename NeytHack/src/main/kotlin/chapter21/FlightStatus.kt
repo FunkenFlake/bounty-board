@@ -9,6 +9,28 @@ data class FlightStatus(
     val status: String,
     val departureTimeInMinutes: Int,
 ) {
+
+    val isFlightCanceled: Boolean
+        get() = status.equals("Canceled", ignoreCase = true)
+
+    val hasBoardingStarted: Boolean
+        get() = departureTimeInMinutes in 15..60
+
+    val isBoardingOver: Boolean
+        get() = departureTimeInMinutes < 15
+
+    val isEligibleToBoard: Boolean
+        get() = departureTimeInMinutes in 15..passengerLoyaltyTier.boardingWindowStart
+
+    val boardingStatus: BoardingState
+        get() = when {
+            isFlightCanceled -> BoardingState.FlightCanceled
+            isBoardingOver -> BoardingState.BoardingEnded
+            isEligibleToBoard -> BoardingState.Boarding
+            hasBoardingStarted -> BoardingState.WaitingToBoard
+            else -> BoardingState.BoardingNotStarted
+        }
+
     companion object {
         fun parse(
             flightResponse: String,
