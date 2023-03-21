@@ -1,10 +1,12 @@
 package chapter22
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import chapter22.BoardingState.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import chapter22.BoardingState.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.channels.toList
 
 val bannedPassengers = setOf("Nogartse")
 
@@ -73,5 +75,64 @@ suspend fun watchFlight(initialFlight: FlightStatus) {
 }
 
 suspend fun fetchFlights(
-    passengerNames: List<String> = listOf("Madrigal", "Polarcubis")
-) = passengerNames.map { fetchFlight(it) }
+    passengerNames: List<String> = listOf(
+        "Madrigal", "Polarcubis",
+        "Estragon", "Taernyl"),
+    numberOfWorkers: Int = 2
+): List<FlightStatus> = coroutineScope {
+    val passengerNamesChannel = Channel<String>()
+    val fetchedFlightsChannel = Channel<FlightStatus>()
+
+    launch {
+        passengerNames.forEach {
+            passengerNamesChannel.send(it)
+        }
+        passengerNamesChannel.close()
+    }
+
+    launch {
+        (1..numberOfWorkers).map {
+            launch {
+                fetchFlightStatuses(passengerNamesChannel, fetchedFlightsChannel)
+            }
+        }.joinAll()
+        fetchedFlightsChannel.close()
+    }
+    fetchedFlightsChannel.toList()
+}
+
+suspend fun fetchFlightStatuses(
+    fetchChannel: ReceiveChannel<String>,
+    resultChannel: SendChannel<FlightStatus>
+) {
+
+    for (passengerName in fetchChannel) {
+        val flight = fetchFlight(passengerName)
+        println("Fetched flight: $flight")
+        resultChannel.send(flight)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
